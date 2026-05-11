@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Math Trainer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dark">
+
+<div class="container">
+
+    <div class="topbar">
+        <h1>🧠 Math Trainer</h1>
+        <button id="themeBtn" onclick="toggleTheme()">🌗 Světlý</button>
+    </div>
+
+    <div class="panel">
+
+        <label>Operace</label>
+        <select id="operation">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">×</option>
+            <option value="/">÷</option>
+        </select>
+
+        <label>A</label>
+        <select id="digitsA">
+            <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+            <option value="7">7</option><option value="8">8</option><option value="9">9</option>
+        </select>
+
+        <label>B</label>
+        <select id="digitsB">
+            <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+            <option value="7">7</option><option value="8">8</option><option value="9">9</option>
+        </select>
+
+    </div>
+
+    <div class="stats">
+        <div>🏆 <span id="rank">🥉 Bronze</span></div>
+        <div>⭐ <span id="score">0</span></div>
+        <div>🔥 <span id="streak">0</span></div>
+        <div>⚡ x<span id="combo">1</span></div>
+    </div>
+
+    <div class="progress-wrap">
+        <div>Progress</div>
+        <div class="progress-bar">
+            <div id="progressFill"></div>
+        </div>
+    </div>
+
+    <h2 id="task">---</h2>
+
+    <input id="answer" autocomplete="off" placeholder="výsledek">
+
+    <button id="mainBtn" onclick="mainAction()">START</button>
+
+</div>
+
+<!-- GAME OVER -->
+<div id="gameOver" class="gameover hidden">
+    <h1>💀 GAME OVER</h1>
+    <button onclick="resetGame()">Restart (Enter)</button>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
