@@ -251,3 +251,25 @@ button:hover{
         font-size:28px;
     }
 }
+.simple{
+    font-size:clamp(70px,14vw,120px);
+}
+
+.column{
+    font-size:clamp(60px,12vw,110px);
+    font-family:monospace;
+    line-height:1.2;
+}
+
+.column div{
+    text-align:right;
+}
+
+#numA, #numB{
+    white-space:pre;
+}
+
+#line{
+    border-top:4px solid currentColor;
+    margin:5px 0;
+}
