@@ -4,6 +4,30 @@ let combo = 1;
 let correct = 0;
 let active = false;
 
+/* 📌 REFS */
+const digitsA = document.getElementById("digitsA");
+const digitsB = document.getElementById("digitsB");
+
+const operation = document.getElementById("operation");
+
+const aEl = document.getElementById("a");
+const bEl = document.getElementById("b");
+const opEl = document.getElementById("op");
+
+const answer = document.getElementById("answer");
+
+const mainBtn = document.getElementById("mainBtn");
+
+const scoreEl = document.getElementById("score");
+const streakEl = document.getElementById("streak");
+const comboEl = document.getElementById("combo");
+
+const rank = document.getElementById("rank");
+
+const fill = document.getElementById("fill");
+
+const gameOverBox = document.getElementById("gameOver");
+
 /* 🔊 ZVUK */
 const ctx = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -36,7 +60,7 @@ function beep(type){
     },120);
 }
 
-/* 📌 DROPDOWNY CIFER */
+/* 🔥 NAPLNĚNÍ DROPDOWNŮ */
 for(let i = 1; i <= 9; i++){
 
     digitsA.innerHTML += `
@@ -51,6 +75,10 @@ for(let i = 1; i <= 9; i++){
         </option>
     `;
 }
+
+/* výchozí hodnoty */
+digitsA.value = 1;
+digitsB.value = 1;
 
 /* 🌗 THEME */
 function toggleTheme(){
@@ -148,9 +176,8 @@ function check(){
             beep("win");
         }
 
-        box.style.boxShadow = `
-            0 0 40px rgba(0,255,0,0.7)
-        `;
+        box.style.boxShadow =
+            "0 0 40px rgba(0,255,0,0.7)";
 
     }else{
 
@@ -159,9 +186,8 @@ function check(){
 
         beep("bad");
 
-        box.style.boxShadow = `
-            0 0 40px rgba(255,0,0,0.7)
-        `;
+        box.style.boxShadow =
+            "0 0 40px rgba(255,0,0,0.7)";
 
         gameOver();
     }
@@ -169,9 +195,7 @@ function check(){
     update();
 
     setTimeout(()=>{
-
         box.style.boxShadow = "none";
-
     },400);
 
     active = false;
@@ -190,31 +214,23 @@ function update(){
     let progress = 0;
 
     if(score >= 5){
-
         rankName = "Stříbro";
         progress = 25;
-
     }
 
     if(score >= 10){
-
         rankName = "Zlato";
         progress = 50;
-
     }
 
     if(score >= 20){
-
         rankName = "Diamant";
         progress = 75;
-
     }
 
     if(score >= 35){
-
         rankName = "God Mode";
         progress = 100;
-
     }
 
     rank.innerText = rankName;
@@ -258,30 +274,6 @@ document.addEventListener("keydown",(e)=>{
         }
     }
 });
-
-/* 📌 REFS */
-const digitsA = document.getElementById("digitsA");
-const digitsB = document.getElementById("digitsB");
-
-const operation = document.getElementById("operation");
-
-const aEl = document.getElementById("a");
-const bEl = document.getElementById("b");
-const opEl = document.getElementById("op");
-
-const answer = document.getElementById("answer");
-
-const mainBtn = document.getElementById("mainBtn");
-
-const scoreEl = document.getElementById("score");
-const streakEl = document.getElementById("streak");
-const comboEl = document.getElementById("combo");
-
-const rank = document.getElementById("rank");
-
-const fill = document.getElementById("fill");
-
-const gameOverBox = document.getElementById("gameOver");
 
 /* 🚀 START */
 update();
