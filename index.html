@@ -11,7 +11,6 @@
 
 <div class="container">
 
-    <!-- TOP -->
     <div class="topbar">
         <h1>🧠 Trenér matematiky</h1>
         <button class="theme-btn" onclick="toggleTheme()">🌗 režim</button>
@@ -50,26 +49,18 @@
     <!-- PŘÍKLAD -->
     <div class="priklad">
 
-        <!-- jednoduchý režim -->
         <div id="simpleView" class="simple"></div>
 
-        <!-- sloupcový režim -->
         <div id="columnView" class="column hidden">
             <div id="numA"></div>
             <div id="numB"></div>
             <div id="line">────────</div>
         </div>
 
-        <!-- dělení -->
         <div id="divView" class="division hidden">
-
             <div class="div-wrapper">
-                <div id="divA" class="div-a"></div>
-                <div id="divB" class="div-b"></div>
+                <div id="divA"></div>
             </div>
-
-            <div id="divResult" class="div-result"></div>
-
         </div>
 
     </div>
@@ -77,10 +68,8 @@
     <!-- ODPOVĚĎ -->
     <input id="answer" autocomplete="off" inputmode="numeric" placeholder="Výsledek">
 
-    <!-- START / CHECK -->
-    <button id="mainBtn" class="main-btn" onclick="mainAction()">
-        START
-    </button>
+    <!-- BUTTON -->
+    <button id="mainBtn" class="main-btn" onclick="mainAction()">START</button>
 
 </div>
 
