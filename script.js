@@ -134,25 +134,42 @@ function generate(){
     let a = rand(+digitsA.value);
     let b = rand(+digitsB.value);
 
-    /* bez mínusu */
     if(op == "-" && b > a){
         [a,b] = [b,a];
     }
 
-    /* bez dělení nulou */
     if(op == "/" && b == 0){
         b = 1;
     }
 
-    aEl.innerText = a;
-    bEl.innerText = b;
-    opEl.innerText = op;
-
     correct = eval(`${a}${op}${b}`);
 
     answer.value = "";
-
     answer.focus();
+
+    /* 📌 kolik cifer */
+    let lenA = String(a).length;
+    let lenB = String(b).length;
+
+    /* 🧠 MALÉ → jednoduchý režim */
+    if(lenA <= 2 && lenB <= 2 && op != "*"){
+
+        document.getElementById("simpleView").style.display = "block";
+        document.getElementById("columnView").classList.add("hidden");
+
+        document.getElementById("simpleView").innerText =
+            `${a} ${op} ${b} =`;
+
+    }
+    else{
+
+        /* 📌 SLOUPCOVÝ ZÁPIS */
+        document.getElementById("simpleView").style.display = "none";
+        document.getElementById("columnView").classList.remove("hidden");
+
+        document.getElementById("numA").innerText = a;
+        document.getElementById("numB").innerText = op + " " + b;
+    }
 }
 
 /* ✔ KONTROLA */
