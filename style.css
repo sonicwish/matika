@@ -273,3 +273,30 @@ button:hover{
     border-top:4px solid currentColor;
     margin:5px 0;
 }
+.division{
+    font-family:monospace;
+    font-size:clamp(50px,10vw,100px);
+    line-height:1.2;
+}
+
+.div-wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    gap:10px;
+}
+
+.div-a{
+    border-right:4px solid currentColor;
+    border-top:4px solid currentColor;
+    padding:0 15px;
+}
+
+.div-b{
+    padding:0 15px;
+}
+
+.div-result{
+    margin-top:10px;
+    text-align:right;
+}
