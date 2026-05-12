@@ -147,21 +147,46 @@ function generate(){
     answer.value = "";
     answer.focus();
 
-    /* 📌 kolik cifer */
     let lenA = String(a).length;
     let lenB = String(b).length;
 
-    /* 🧠 MALÉ → jednoduchý režim */
-    if(lenA <= 2 && lenB <= 2 && op != "*"){
+    /* ➕➖× malé příklady */
+    if(op != "/"){
 
-        document.getElementById("simpleView").style.display = "block";
-        document.getElementById("columnView").classList.add("hidden");
+        if(lenA <= 2 && lenB <= 2){
 
-        document.getElementById("simpleView").innerText =
-            `${a} ${op} ${b} =`;
+            simpleView.style.display = "block";
+            columnView.classList.add("hidden");
+            divView.classList.add("hidden");
+
+            simpleView.innerText = `${a} ${op} ${b} =`;
+
+        }
+        else{
+
+            simpleView.style.display = "none";
+            columnView.classList.remove("hidden");
+            divView.classList.add("hidden");
+
+            numA.innerText = a;
+            numB.innerText = op + " " + b;
+        }
 
     }
-    else{
+
+    /* ➗ DĚLENÍ */
+    if(op == "/"){
+
+        simpleView.style.display = "none";
+        columnView.classList.add("hidden");
+        divView.classList.remove("hidden");
+
+        divA.innerText = `${b} ) ${a}`;
+        divB.innerText = "";
+        divResult.innerText = "";
+
+    }
+}
 
         /* 📌 SLOUPCOVÝ ZÁPIS */
         document.getElementById("simpleView").style.display = "none";
