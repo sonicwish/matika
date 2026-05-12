@@ -13,10 +13,13 @@
 
     <div class="topbar">
         <h1>🧠 Trenér matematiky</h1>
-        <button class="theme-btn" onclick="toggleTheme()">🌗 režim</button>
+
+        <button class="theme-btn" onclick="toggleTheme()">
+            🌗 Režim
+        </button>
     </div>
 
-    <!-- NASTAVENÍ -->
+    <!-- MENU -->
     <div class="panel">
 
         <select id="operation">
@@ -27,11 +30,12 @@
         </select>
 
         <select id="digitsA"></select>
+
         <select id="digitsB"></select>
 
     </div>
 
-    <!-- STATISTIKY -->
+    <!-- STATS -->
     <div class="stats">
         <div>🏆 <span id="rank">Bronz</span></div>
         <div>⭐ <span id="score">0</span></div>
@@ -47,36 +51,67 @@
     </div>
 
     <!-- PŘÍKLAD -->
-    <div class="priklad">
+<div class="priklad">
 
-        <div id="simpleView" class="simple"></div>
+    <div id="simpleView" class="simple"></div>
 
-        <div id="columnView" class="column hidden">
-            <div id="numA"></div>
-            <div id="numB"></div>
-            <div id="line">────────</div>
+    <div id="columnView" class="column hidden">
+        <div id="numA"></div>
+        <div id="numB"></div>
+        <div id="line">────────</div>
+    </div>
+
+    <!-- ➗ DĚLENÍ -->
+    <div id="divView" class="division hidden">
+
+        <div class="div-wrapper">
+            <div id="divA" class="div-a"></div>
+            <div id="divB" class="div-b"></div>
         </div>
 
-        <div id="divView" class="division hidden">
-            <div class="div-wrapper">
-                <div id="divA"></div>
-            </div>
-        </div>
+        <div id="divResult" class="div-result"></div>
 
     </div>
 
-    <!-- ODPOVĚĎ -->
-    <input id="answer" autocomplete="off" inputmode="numeric" placeholder="Výsledek">
+</div>
+    <!-- ➗ DĚLENÍ -->
+    <div id="divView" class="division hidden">
 
-    <!-- BUTTON -->
-    <button id="mainBtn" class="main-btn" onclick="mainAction()">START</button>
+        <div class="div-wrapper">
+            <div id="divA" class="div-a"></div>
+            <div id="divB" class="div-b"></div>
+        </div>
+
+        <div id="divResult" class="div-result"></div>
+
+    </div>
+
+</div>
+
+    <!-- ODPOVĚĎ -->
+    <input
+        id="answer"
+        autocomplete="off"
+        inputmode="numeric"
+        placeholder="Výsledek"
+    >
+
+    <!-- HLAVNÍ BUTTON -->
+    <button id="mainBtn" class="main-btn" onclick="mainAction()">
+        START
+    </button>
 
 </div>
 
 <!-- GAME OVER -->
 <div id="gameOver" class="gameover hidden">
+
     <h1>💀 KONEC HRY</h1>
-    <button onclick="resetGame()">Hrát znovu</button>
+
+    <button onclick="resetGame()">
+        Hrát znovu
+    </button>
+
 </div>
 
 <script src="script.js"></script>
