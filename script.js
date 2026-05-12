@@ -1,168 +1,287 @@
 let score = 0;
 let streak = 0;
 let combo = 1;
-let correctAnswer = 0;
-let gameActive = false;
+let correct = 0;
+let active = false;
 
-/* 🎵 zvuky */
-const sounds = {
-    correct: new Audio("https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b7f7c5c1.mp3"),
-    wrong: new Audio("https://cdn.pixabay.com/download/audio/2022/03/15/audio_3f3a5c1b8d.mp3"),
-    win: new Audio("https://cdn.pixabay.com/download/audio/2022/03/15/audio_2c1b1d3f7a.mp3")
-};
+/* 🔊 ZVUK */
+const ctx = new (window.AudioContext || window.webkitAudioContext)();
 
-/* 🔓 unlock audio */
-function unlockAudio() {
-    for (let s in sounds) {
-        sounds[s].play().then(() => {
-            sounds[s].pause();
-            sounds[s].currentTime = 0;
-        }).catch(() => {});
+function beep(type){
+
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+
+    o.connect(g);
+    g.connect(ctx.destination);
+
+    if(type === "good"){
+        o.frequency.value = 700;
     }
+
+    if(type === "bad"){
+        o.frequency.value = 180;
+    }
+
+    if(type === "win"){
+        o.frequency.value = 1000;
+    }
+
+    g.gain.value = 0.15;
+
+    o.start();
+
+    setTimeout(()=>{
+        o.stop();
+    },120);
 }
 
-/* 🌗 theme */
-function toggleTheme() {
-    document.body.classList.add("theme-anim");
+/* 📌 DROPDOWNY CIFER */
+for(let i = 1; i <= 9; i++){
 
-    setTimeout(() => {
-        document.body.classList.toggle("dark");
-        document.body.classList.toggle("light");
+    digitsA.innerHTML += `
+        <option value="${i}">
+            ${i} cifra
+        </option>
+    `;
 
-        document.getElementById("themeBtn").innerText =
-            document.body.classList.contains("dark") ? "🌗 Světlý" : "🌙 Tmavý";
-    }, 150);
-
-    setTimeout(() => {
-        document.body.classList.remove("theme-anim");
-    }, 500);
+    digitsB.innerHTML += `
+        <option value="${i}">
+            ${i} cifra
+        </option>
+    `;
 }
 
-/* 🎮 start / check */
-function mainAction() {
-    unlockAudio();
+/* 🌗 THEME */
+function toggleTheme(){
 
-    if (!gameActive) {
+    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
+
+}
+
+/* 🎮 START / KONTROLA */
+function mainAction(){
+
+    ctx.resume();
+
+    if(!active){
+
         generate();
-        gameActive = true;
-        document.getElementById("mainBtn").innerText = "CHECK";
-    } else {
+
+        active = true;
+
+        mainBtn.innerText = "KONTROLA";
+
+    }else{
+
         check();
+
     }
 }
 
-/* 🎲 generate */
-function getRandom(d) {
-    let min = d === 1 ? 0 : Math.pow(10, d - 1);
-    let max = Math.pow(10, d) - 1;
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+/* 🎲 RANDOM */
+function rand(d){
+
+    let min;
+
+    if(d == 1){
+        min = 0;
+    }else{
+        min = 10 ** (d - 1);
+    }
+
+    let max = (10 ** d) - 1;
+
+    return Math.floor(
+        Math.random() * (max - min + 1)
+    ) + min;
 }
 
-function generate() {
-    let op = document.getElementById("operation").value;
+/* 🧠 GENEROVÁNÍ */
+function generate(){
 
-    let a = getRandom(+document.getElementById("digitsA").value);
-    let b = getRandom(+document.getElementById("digitsB").value);
+    let op = operation.value;
 
-    if (op === "-") if (b > a) [a, b] = [b, a];
-    if (op === "/") if (b === 0) b = 1;
+    let a = rand(+digitsA.value);
+    let b = rand(+digitsB.value);
 
-    document.getElementById("task").innerText = `${a} ${op} ${b}`;
-    correctAnswer = eval(`${a}${op}${b}`);
+    /* bez mínusu */
+    if(op == "-" && b > a){
+        [a,b] = [b,a];
+    }
 
-    document.getElementById("answer").value = "";
+    /* bez dělení nulou */
+    if(op == "/" && b == 0){
+        b = 1;
+    }
+
+    aEl.innerText = a;
+    bEl.innerText = b;
+    opEl.innerText = op;
+
+    correct = eval(`${a}${op}${b}`);
+
+    answer.value = "";
+
+    answer.focus();
 }
 
-/* ✔ check */
-function check() {
-    let user = Number(document.getElementById("answer").value.replace(/\s+/g, ""));
-    let container = document.querySelector(".container");
+/* ✔ KONTROLA */
+function check(){
 
-    if (user === correctAnswer) {
+    let u = Number(
+        answer.value.replace(/\s+/g,"")
+    );
+
+    let box = document.querySelector(".container");
+
+    if(u === correct){
+
         score++;
         streak++;
         combo++;
 
-        sounds.correct.currentTime = 0;
-        sounds.correct.play();
+        beep("good");
 
-        if (combo >= 5) {
-            sounds.win.currentTime = 0;
-            sounds.win.play();
+        if(combo >= 5){
+            beep("win");
         }
 
-        container.classList.add("correct-flash");
-    } else {
+        box.style.boxShadow = `
+            0 0 40px rgba(0,255,0,0.7)
+        `;
+
+    }else{
+
         streak = 0;
         combo = 1;
 
-        sounds.wrong.currentTime = 0;
-        sounds.wrong.play();
+        beep("bad");
 
-        container.classList.add("wrong-flash");
+        box.style.boxShadow = `
+            0 0 40px rgba(255,0,0,0.7)
+        `;
+
         gameOver();
     }
 
-    updateUI();
+    update();
 
-    setTimeout(() => {
-        container.classList.remove("correct-flash", "wrong-flash");
-    }, 400);
+    setTimeout(()=>{
 
-    gameActive = false;
-    document.getElementById("mainBtn").innerText = "START";
+        box.style.boxShadow = "none";
+
+    },400);
+
+    active = false;
+
+    mainBtn.innerText = "START";
 }
 
-/* 🏆 rank + progress */
-function updateUI() {
-    document.getElementById("score").innerText = score;
-    document.getElementById("streak").innerText = streak;
-    document.getElementById("combo").innerText = combo;
+/* 🏆 UPDATE UI */
+function update(){
 
-    let rank = "🥉 Bronze";
-    let next = 5;
-    let prev = 0;
+    scoreEl.innerText = score;
+    streakEl.innerText = streak;
+    comboEl.innerText = combo;
 
-    if (score >= 35) { rank = "👑 God Mode"; prev = 35; next = 35; }
-    else if (score >= 20) { rank = "💎 Diamond"; prev = 20; next = 35; }
-    else if (score >= 10) { rank = "🥇 Gold"; prev = 10; next = 20; }
-    else if (score >= 5) { rank = "🥈 Silver"; prev = 5; next = 10; }
+    let rankName = "Bronz";
+    let progress = 0;
 
-    document.getElementById("rank").innerText = rank;
+    if(score >= 5){
 
-    let percent = ((score - prev) / (next - prev)) * 100;
-    if (percent < 0) percent = 0;
-    if (percent > 100) percent = 100;
+        rankName = "Stříbro";
+        progress = 25;
 
-    document.getElementById("progressFill").style.width = percent + "%";
+    }
+
+    if(score >= 10){
+
+        rankName = "Zlato";
+        progress = 50;
+
+    }
+
+    if(score >= 20){
+
+        rankName = "Diamant";
+        progress = 75;
+
+    }
+
+    if(score >= 35){
+
+        rankName = "God Mode";
+        progress = 100;
+
+    }
+
+    rank.innerText = rankName;
+
+    fill.style.width = progress + "%";
 }
 
-/* 💀 game over */
-function gameOver() {
-    document.getElementById("gameOver").classList.remove("hidden");
+/* 💀 GAME OVER */
+function gameOver(){
+
+    gameOverBox.classList.remove("hidden");
+
 }
 
-/* 🔁 reset */
-function resetGame() {
+/* 🔁 RESET */
+function resetGame(){
+
     score = 0;
     streak = 0;
     combo = 1;
 
-    updateUI();
+    update();
 
-    document.getElementById("gameOver").classList.add("hidden");
-    document.getElementById("mainBtn").innerText = "START";
+    gameOverBox.classList.add("hidden");
+
 }
 
 /* ⌨️ ENTER */
-document.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-        if (!document.getElementById("gameOver").classList.contains("hidden")) {
-            resetGame();
-        } else {
+document.addEventListener("keydown",(e)=>{
+
+    if(e.key === "Enter"){
+
+        if(gameOverBox.classList.contains("hidden")){
+
             mainAction();
+
+        }else{
+
+            resetGame();
+
         }
     }
 });
 
-updateUI();
+/* 📌 REFS */
+const digitsA = document.getElementById("digitsA");
+const digitsB = document.getElementById("digitsB");
+
+const operation = document.getElementById("operation");
+
+const aEl = document.getElementById("a");
+const bEl = document.getElementById("b");
+const opEl = document.getElementById("op");
+
+const answer = document.getElementById("answer");
+
+const mainBtn = document.getElementById("mainBtn");
+
+const scoreEl = document.getElementById("score");
+const streakEl = document.getElementById("streak");
+const comboEl = document.getElementById("combo");
+
+const rank = document.getElementById("rank");
+
+const fill = document.getElementById("fill");
+
+const gameOverBox = document.getElementById("gameOver");
+
+/* 🚀 START */
+update();
