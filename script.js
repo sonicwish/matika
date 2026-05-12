@@ -60,18 +60,18 @@ function beep(type){
     },120);
 }
 
-/* 🔥 NAPLNĚNÍ DROPDOWNŮ */
+/* 🔥 DROPDOWNY */
 for(let i = 1; i <= 9; i++){
 
     digitsA.innerHTML += `
         <option value="${i}">
-            ${i} cifra
+            ${i}
         </option>
     `;
 
     digitsB.innerHTML += `
         <option value="${i}">
-            ${i} cifra
+            ${i}
         </option>
     `;
 }
