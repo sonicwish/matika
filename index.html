@@ -11,15 +11,13 @@
 
 <div class="container">
 
+    <!-- TOP -->
     <div class="topbar">
         <h1>🧠 Trenér matematiky</h1>
-
-        <button class="theme-btn" onclick="toggleTheme()">
-            🌗 Režim
-        </button>
+        <button class="theme-btn" onclick="toggleTheme()">🌗 režim</button>
     </div>
 
-    <!-- MENU -->
+    <!-- NASTAVENÍ -->
     <div class="panel">
 
         <select id="operation">
@@ -30,12 +28,11 @@
         </select>
 
         <select id="digitsA"></select>
-
         <select id="digitsB"></select>
 
     </div>
 
-    <!-- STATS -->
+    <!-- STATISTIKY -->
     <div class="stats">
         <div>🏆 <span id="rank">Bronz</span></div>
         <div>⭐ <span id="score">0</span></div>
@@ -43,33 +40,44 @@
         <div>⚡ x<span id="combo">1</span></div>
     </div>
 
-    <!-- PROGRESS -->
+    <!-- PROGRESS BAR -->
     <div class="progress">
         <div class="bar">
             <div id="fill"></div>
         </div>
     </div>
 
-<div class="priklad">
+    <!-- 📌 PŘÍKLADY -->
+    <div class="priklad">
 
-    <div id="simpleView" class="simple"></div>
+        <!-- jednoduchý -->
+        <div id="simpleView" class="simple"></div>
 
-    <div id="columnView" class="column hidden">
-        <div id="numA"></div>
-        <div id="numB"></div>
-        <div id="line">───</div>
+        <!-- sloupcové -->
+        <div id="columnView" class="column hidden">
+            <div id="numA"></div>
+            <div id="numB"></div>
+            <div id="line">────────</div>
+        </div>
+
+        <!-- dělení -->
+        <div id="divView" class="division hidden">
+
+            <div class="div-wrapper">
+                <div id="divA" class="div-a"></div>
+                <div id="divB" class="div-b"></div>
+            </div>
+
+            <div id="divResult" class="div-result"></div>
+
+        </div>
+
     </div>
 
-</div>
     <!-- ODPOVĚĎ -->
-    <input
-        id="answer"
-        autocomplete="off"
-        inputmode="numeric"
-        placeholder="Výsledek"
-    >
+    <input id="answer" autocomplete="off" inputmode="numeric" placeholder="Výsledek">
 
-    <!-- HLAVNÍ BUTTON -->
+    <!-- START / CHECK -->
     <button id="mainBtn" class="main-btn" onclick="mainAction()">
         START
     </button>
@@ -78,13 +86,8 @@
 
 <!-- GAME OVER -->
 <div id="gameOver" class="gameover hidden">
-
     <h1>💀 KONEC HRY</h1>
-
-    <button onclick="resetGame()">
-        Hrát znovu
-    </button>
-
+    <button onclick="resetGame()">Hrát znovu</button>
 </div>
 
 <script src="script.js"></script>
